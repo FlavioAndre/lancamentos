@@ -1,0 +1,11 @@
+/home/devuser/development/desafio/lancamentos/consolidado/src/Domain/bin/Debug/net8.0/Domain.deps.json
+/home/devuser/development/desafio/lancamentos/consolidado/src/Domain/bin/Debug/net8.0/Domain.dll
+/home/devuser/development/desafio/lancamentos/consolidado/src/Domain/bin/Debug/net8.0/Domain.pdb
+/home/devuser/development/desafio/lancamentos/consolidado/src/Domain/obj/Debug/net8.0/Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/devuser/development/desafio/lancamentos/consolidado/src/Domain/obj/Debug/net8.0/Domain.AssemblyInfoInputs.cache
+/home/devuser/development/desafio/lancamentos/consolidado/src/Domain/obj/Debug/net8.0/Domain.AssemblyInfo.cs
+/home/devuser/development/desafio/lancamentos/consolidado/src/Domain/obj/Debug/net8.0/Domain.csproj.CoreCompileInputs.cache
+/home/devuser/development/desafio/lancamentos/consolidado/src/Domain/obj/Debug/net8.0/Domain.dll
+/home/devuser/development/desafio/lancamentos/consolidado/src/Domain/obj/Debug/net8.0/refint/Domain.dll
+/home/devuser/development/desafio/lancamentos/consolidado/src/Domain/obj/Debug/net8.0/Domain.pdb
+/home/devuser/development/desafio/lancamentos/consolidado/src/Domain/obj/Debug/net8.0/ref/Domain.dll

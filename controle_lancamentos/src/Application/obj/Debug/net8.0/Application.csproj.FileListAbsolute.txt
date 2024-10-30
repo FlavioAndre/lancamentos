@@ -1,0 +1,16 @@
+/home/devuser/development/desafio/fluxo_caixa/lancamentos/controle_lancamentos/src/Application/bin/Debug/net8.0/Application.deps.json
+/home/devuser/development/desafio/fluxo_caixa/lancamentos/controle_lancamentos/src/Application/bin/Debug/net8.0/Application.dll
+/home/devuser/development/desafio/fluxo_caixa/lancamentos/controle_lancamentos/src/Application/bin/Debug/net8.0/Application.pdb
+/home/devuser/development/desafio/fluxo_caixa/lancamentos/controle_lancamentos/src/Application/bin/Debug/net8.0/Domain.dll
+/home/devuser/development/desafio/fluxo_caixa/lancamentos/controle_lancamentos/src/Application/bin/Debug/net8.0/Domain.pdb
+/home/devuser/development/desafio/fluxo_caixa/lancamentos/controle_lancamentos/src/Application/obj/Debug/net8.0/Application.csproj.AssemblyReference.cache
+/home/devuser/development/desafio/fluxo_caixa/lancamentos/controle_lancamentos/src/Application/obj/Debug/net8.0/Application.GeneratedMSBuildEditorConfig.editorconfig
+/home/devuser/development/desafio/fluxo_caixa/lancamentos/controle_lancamentos/src/Application/obj/Debug/net8.0/Application.AssemblyInfoInputs.cache
+/home/devuser/development/desafio/fluxo_caixa/lancamentos/controle_lancamentos/src/Application/obj/Debug/net8.0/Application.AssemblyInfo.cs
+/home/devuser/development/desafio/fluxo_caixa/lancamentos/controle_lancamentos/src/Application/obj/Debug/net8.0/Application.csproj.CoreCompileInputs.cache
+/home/devuser/development/desafio/fluxo_caixa/lancamentos/controle_lancamentos/src/Application/obj/Debug/net8.0/Application.sourcelink.json
+/home/devuser/development/desafio/fluxo_caixa/lancamentos/controle_lancamentos/src/Application/obj/Debug/net8.0/Applicat.44B5EDA2.Up2Date
+/home/devuser/development/desafio/fluxo_caixa/lancamentos/controle_lancamentos/src/Application/obj/Debug/net8.0/Application.dll
+/home/devuser/development/desafio/fluxo_caixa/lancamentos/controle_lancamentos/src/Application/obj/Debug/net8.0/refint/Application.dll
+/home/devuser/development/desafio/fluxo_caixa/lancamentos/controle_lancamentos/src/Application/obj/Debug/net8.0/Application.pdb
+/home/devuser/development/desafio/fluxo_caixa/lancamentos/controle_lancamentos/src/Application/obj/Debug/net8.0/ref/Application.dll
