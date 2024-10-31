@@ -6,10 +6,10 @@ namespace ControleLancamentos.Domain.Entities
     public class Transaction
     {
         public int Id { get; set; }
-        public decimal Amount { get; set; }
+        public required decimal Amount { get; set; }
         public required string Description { get; set; }
         public DateTime CreatedAt { get; set; }
-        [JsonPropertyName("type")] 
+        [JsonPropertyName("type")]
         public required TransactionType Type { get; set; }
     }
 }

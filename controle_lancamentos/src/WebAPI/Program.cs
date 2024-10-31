@@ -16,63 +16,76 @@ var builder = WebApplication.CreateBuilder(args);
 // Carregar variáveis de ambiente do .env
 DotNetEnv.Env.Load();
 
-// Configurar DB Context com variáveis de ambiente
-builder.Services.AddDbContext<TransactionDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// Configurar RabbitMQ com variáveis de ambiente
-builder.Services.AddSingleton<IConnectionFactory>(sp =>
-{
-    var rabbitMqUri = builder.Configuration["RabbitMQ:Uri"] ?? "amqp://guest:guest@rabbitmq:5672";
-    var uri = new Uri(rabbitMqUri);
-    return new ConnectionFactory() { Uri = uri };
-});
-builder.Services.AddScoped<IMessagePublisher, RabbitMqMessagePublisher>();
-
-// Configurar Serviços e JWT usando variáveis de ambiente
-var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET");
-builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JWT"));
-builder.Services.AddScoped<ITransactionService, TransactionService>();
-builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
-
-// Configuração de autenticação, JWT, Swagger e serviços
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-});
-
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Version = "v1",
-        Title = "API de Controle de Lançamentos",
-        Description = "Documentação da API para o sistema de controle de lançamentos",
-        Contact = new OpenApiContact
-        {
-            Name = "dev",
-        }
-    });
-});
-
-builder.Services.AddMediatR(typeof(CreateTransactionCommandHandler).Assembly);
+// Configurar serviços
+ConfigureServices(builder.Services, builder.Configuration);
 
 var app = builder.Build();
-// Configuração do pipeline HTTP
-if (app.Environment.IsDevelopment())
+
+// Configurar pipeline HTTP
+ConfigurePipeline(app);
+
+app.Run();
+
+void ConfigureServices(IServiceCollection services, IConfiguration configuration)
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
+    // Configurar DB Context com variáveis de ambiente
+    services.AddDbContext<TransactionDbContext>(options =>
+        options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+    // Configurar RabbitMQ com variáveis de ambiente
+    services.AddSingleton<IConnectionFactory>(sp =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "API de Controle de Lançamentos V1");
-        c.RoutePrefix = string.Empty; // Swagger disponível em http://localhost:8080/
+        var rabbitMqUri = configuration["RabbitMQ:Uri"] ?? "amqp://guest:guest@rabbitmq:5672";
+        var uri = new Uri(rabbitMqUri);
+        return new ConnectionFactory() { Uri = uri };
+    });
+    services.AddScoped<IMessagePublisher, RabbitMqMessagePublisher>();
+
+    // Configurar Serviços e JWT usando variáveis de ambiente
+    services.Configure<JwtSettings>(configuration.GetSection("JWT"));
+    services.AddScoped<ITransactionService, TransactionService>();
+    services.AddScoped<ITransactionRepository, TransactionRepository>();
+
+    // Configuração de autenticação, JWT, Swagger e serviços
+    services.AddControllers().AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+    });
+
+    services.AddEndpointsApiExplorer();
+    ConfigureSwagger(services);
+
+    services.AddMediatR(typeof(CreateTransactionCommandHandler).Assembly);
+}
+
+void ConfigureSwagger(IServiceCollection services)
+{
+    services.AddSwaggerGen(c =>
+    {
+        c.SwaggerDoc("v1", new OpenApiInfo
+        {
+            Version = "v1",
+            Title = "API de Controle de Lançamentos",
+            Description = "Documentação da API para o sistema de controle de lançamentos",
+            Contact = new OpenApiContact
+            {
+                Name = "dev",
+            }
+        });
     });
 }
 
-//app.UseHttpsRedirection();
-//app.UseAuthentication();
-//app.UseAuthorization();
-app.MapControllers();
-app.Run();
+void ConfigurePipeline(WebApplication app)
+{
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "API de Controle de Lançamentos V1");
+            c.RoutePrefix = string.Empty; // Swagger disponível em http://localhost:8080/
+        });
+    }
+
+    app.MapControllers();
+}

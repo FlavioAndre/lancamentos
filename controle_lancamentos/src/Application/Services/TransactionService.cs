@@ -2,6 +2,7 @@ using ControleLancamentos.Application.Commands;
 using ControleLancamentos.Application.Interfaces;
 using Microsoft.Extensions.Logging;
 using Polly;
+using Polly.Retry;
 
 namespace ControleLancamentos.Application.Services
 {
@@ -20,30 +21,46 @@ namespace ControleLancamentos.Application.Services
             _transactionRepository = transactionRepository;
             _messagePublisher = messagePublisher;
             _logger = logger;
-
-            _retryPolicy = Policy.Handle<Exception>()
-                                 .CircuitBreakerAsync(2, TimeSpan.FromMinutes(1),
-                                    onBreak: (ex, breakDelay) =>
-                                    {
-                                        _logger.LogError("Circuit Breaker ativado por {BreakDelay}", breakDelay);
-                                    },
-                                    onReset: () => _logger.LogInformation("Circuit Breaker resetado"),
-                                    onHalfOpen: () => _logger.LogInformation("Circuit Breaker em Half-Open"))
-                                 .WrapAsync(Policy.Handle<Exception>()
-                                                  .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(2),
-                                                  onRetry: (exception, retryCount) =>
-                                                  {
-                                                      _logger.LogWarning("Tentativa {RetryCount}", retryCount);
-                                                  }));
+            _retryPolicy = CreateRetryPolicy();
         }
 
+        /// <summary>
+        /// Executes the provided asynchronous action with a retry policy.
+        /// This method ensures that transient failures are retried according to the configured policy.
+        /// </summary>
+        /// <param name="action">The asynchronous action to be executed with retry logic.</param>
+        private async Task ExecuteWithRetryAsync(Func<Task> action)
+        {
+            await _retryPolicy.ExecuteAsync(action);
+        }
+
+        private AsyncRetryPolicy CreateRetryPolicy()
+        {
+            // Configures a retry policy that retries 3 times with a 2-second delay between retries.
+            return Policy.Handle<Exception>()
+                         .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(2),
+                         onRetry: (exception, retryCount, context) =>
+                         {
+                             _logger.LogWarning("Retry attempt {RetryCount} due to: {Exception}", retryCount, exception);
+                         });
+        }
+
+        /// <summary>
+        /// Adds a new transaction asynchronously.
+        /// This method uses a retry policy to handle transient failures.
+        /// </summary>
+        /// <param name="transaction">The transaction command to be added.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
         public async Task AddTransactionAsync(CreateTransactionCommand transaction)
         {
-            await _transactionRepository.AddAsync(transaction);
-            await _retryPolicy.ExecuteAsync(async () =>
-            {
-                await _messagePublisher.PublishAsync("transactionQueue", transaction);
-            });
+            await ExecuteWithRetryAsync(() => AddTransactionInternalAsync(transaction));
+        }
+
+        private async Task AddTransactionInternalAsync(CreateTransactionCommand transaction)
+        {
+            var addTask = _transactionRepository.AddTransactionAsync(transaction);
+            var publishTask = _messagePublisher.PublishAsync("transactionQueue", transaction);
+            await Task.WhenAll(addTask, publishTask);
         }
     }
 }

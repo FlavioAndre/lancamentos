@@ -22,10 +22,26 @@ namespace ControleLancamentos.Infrastructure.Messaging
 
         public async Task PublishAsync(string queueName, CreateTransactionCommand command)
         {
+            if (!_connection.IsOpen || !_channel.IsOpen)
+            {
+                _logger.LogError("RabbitMQ connection or channel is closed.");
+                throw new InvalidOperationException("RabbitMQ connection or channel is closed.");
+            }
+
             var messageBody = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(command));
+            DeclareQueue(queueName);
+            await PublishMessageAsync(queueName, messageBody);
+            _logger.LogInformation("Message published to queue: {QueueName}", queueName);
+        }
+
+        private void DeclareQueue(string queueName)
+        {
             _channel.QueueDeclare(queue: queueName, durable: true, exclusive: false, autoDelete: false);
-            await Task.Run(() => _channel.BasicPublish("", queueName, null, messageBody));
-            _logger.LogInformation("Mensagem publicada na fila: {QueueName}", queueName);
+        }
+
+        private Task PublishMessageAsync(string queueName, byte[] messageBody)
+        {
+            return Task.Run(() => _channel.BasicPublish("", queueName, null, messageBody));
         }
 
         public void Dispose()

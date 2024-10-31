@@ -11,7 +11,7 @@ namespace ControleLancamentos.Domain.ValueObjects
 
         private TransactionType(string value)
         {
-            Value = value.ToLower();
+            Value = value.ToLowerInvariant();
         }
 
         public static TransactionType FromString(string value)
@@ -26,7 +26,7 @@ namespace ControleLancamentos.Domain.ValueObjects
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            yield return Value.ToLower();
+            yield return Value;
         }
 
         public override string ToString() => Value;

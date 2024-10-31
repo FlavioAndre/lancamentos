@@ -17,7 +17,7 @@ namespace ControleLancamentos.Infrastructure.Data
             _logger = logger;
         }
 
-        public async Task AddAsync(CreateTransactionCommand command)
+        public async Task AddTransactionAsync(CreateTransactionCommand command)
         {
             var transaction = new Transaction
             {
@@ -26,7 +26,10 @@ namespace ControleLancamentos.Infrastructure.Data
                 Description = command.Description
             };
             
-            transaction.CreatedAt = transaction.CreatedAt == default ? DateTime.UtcNow : transaction.CreatedAt;
+            if (transaction.CreatedAt == default)
+            {
+                transaction.CreatedAt = DateTime.UtcNow;
+            }
 
             _logger.LogInformation("Adicionando transação: Amount = {Amount}, Type = {Type}, Description = {Description}, CreatedAt = {CreatedAt}",
             transaction.Amount, transaction.Type, transaction.Description, transaction.CreatedAt);

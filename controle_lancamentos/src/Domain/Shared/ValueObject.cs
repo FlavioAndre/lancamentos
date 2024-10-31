@@ -7,17 +7,18 @@ namespace ControleLancamentos.Domain.Shared
 
         public override bool Equals(object? obj)
         {
-            if (obj == null || obj.GetType() != GetType())
+            if (obj is not ValueObject other || obj.GetType() != GetType())
+            {
                 return false;
+            }
 
-            var other = (ValueObject)obj;
             return GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
         }
 
         public override int GetHashCode()
         {
             return GetEqualityComponents()
-                .Aggregate(1, (current, obj) => HashCode.Combine(current, obj));
+                .Aggregate(1, (hash, component) => HashCode.Combine(hash, component));
         }
     }
 }
