@@ -6,7 +6,7 @@ using Consolidado.Application.Repositories;
 using Consolidado.Application.Handlers;
 
 using RabbitMQ.Client;
-using ControleLancamentos.Infrastructure.Messaging;
+using Consolidado.Infrastructure.Messaging;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);

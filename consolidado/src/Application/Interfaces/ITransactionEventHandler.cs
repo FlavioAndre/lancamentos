@@ -1,4 +1,4 @@
-using ControleLancamentos.Application.Events;
+using Consolidado.Application.Events;
 
 namespace Consolidado.Application.Interfaces
 {

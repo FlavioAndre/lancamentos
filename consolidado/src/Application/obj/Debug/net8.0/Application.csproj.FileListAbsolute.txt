@@ -13,3 +13,4 @@
 /home/devuser/development/desafio/lancamentos/consolidado/src/Application/obj/Debug/net8.0/refint/Application.dll
 /home/devuser/development/desafio/lancamentos/consolidado/src/Application/obj/Debug/net8.0/Application.pdb
 /home/devuser/development/desafio/lancamentos/consolidado/src/Application/obj/Debug/net8.0/ref/Application.dll
+/home/devuser/development/desafio/lancamentos/consolidado/src/Application/obj/Debug/net8.0/Application.sourcelink.json

@@ -1,6 +1,6 @@
 using Consolidado.Application.Interfaces;
 using Consolidado.Application.Repositories;
-using ControleLancamentos.Application.Events;
+using Consolidado.Application.Events;
 using Microsoft.Extensions.Logging;
 
 namespace Consolidado.Application.Handlers

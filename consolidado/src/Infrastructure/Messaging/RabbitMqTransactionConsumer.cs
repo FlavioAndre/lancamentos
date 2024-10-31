@@ -1,14 +1,14 @@
 using System.Text;
 using System.Text.Json;
 using Consolidado.Application.Interfaces;
-using ControleLancamentos.Application.Events;
+using Consolidado.Application.Events;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace ControleLancamentos.Infrastructure.Messaging
+namespace Consolidado.Infrastructure.Messaging
 {
     public class RabbitMqTransactionConsumer : BackgroundService
     {

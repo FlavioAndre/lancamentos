@@ -3,7 +3,7 @@ using Consolidado.Domain.Entities;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Consolidado.Infrastructure.Data;
-using ControleLancamentos.Application.Events;
+using Consolidado.Application.Events;
 
 namespace Consolidado.Infrastructure.Repositories
 {

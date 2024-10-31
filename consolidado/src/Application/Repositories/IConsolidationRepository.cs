@@ -1,5 +1,5 @@
 using Consolidado.Domain.Entities;
-using ControleLancamentos.Application.Events;
+using Consolidado.Application.Events;
 
 namespace Consolidado.Application.Repositories
 {

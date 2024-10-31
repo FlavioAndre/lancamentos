@@ -1,4 +1,4 @@
-namespace ControleLancamentos.Application.Events
+namespace Consolidado.Application.Events
 {
     public class TransactionEvent
     {
