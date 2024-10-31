@@ -1,6 +1,3 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
 name: .NET
 
 on:
@@ -11,8 +8,12 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project:
+          - controle_lancamentos/src/WebAPI
+          - controle_lancamentos/src/AnotherProject  # Add more project paths as needed
 
     steps:
     - uses: actions/checkout@v4
@@ -20,9 +21,22 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+    - name: Cache NuGet packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ${{ matrix.project }}
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build ${{ matrix.project }} --no-restore --configuration Release
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ${{ matrix.project }} --no-build --verbosity normal
+    - name: Publish Test Results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: ${{ matrix.project }}/TestResults
