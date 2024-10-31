@@ -12,8 +12,8 @@ jobs:
     strategy:
       matrix:
         project:
-          - controle_lancamentos/src/WebAPI
-          - controle_lancamentos/src/AnotherProject  # Add more project paths as needed
+          - controle_lancamentos
+          - consolidado
 
     steps:
     - uses: actions/checkout@v4
