@@ -22,7 +22,7 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Cache NuGet packages
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
@@ -33,12 +33,10 @@ jobs:
     - name: Build
       run: dotnet build ${{ matrix.project }} --no-restore --configuration Release
     - name: Test
-      run: |
-          cd tests
-          dotnet test ${{ matrix.project }} --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal
     - name: Publish Test Results
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: test-results
         path: ${{ matrix.project }}/TestResults
