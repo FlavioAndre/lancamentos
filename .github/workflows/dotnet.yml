@@ -33,7 +33,9 @@ jobs:
     - name: Build
       run: dotnet build ${{ matrix.project }} --no-restore --configuration Release
     - name: Test
-      run: dotnet test ${{ matrix.project }} --no-build --verbosity normal
+      run: |
+          cd tests
+          dotnet test ${{ matrix.project }} --no-build --verbosity normal
     - name: Publish Test Results
       if: always()
       uses: actions/upload-artifact@v3
