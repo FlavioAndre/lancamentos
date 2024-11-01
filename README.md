@@ -58,55 +58,15 @@ Os diagramas a seguir foram gerados utilizando o C4 Model com PlantUML para desc
 
 ### Diagrama de Contexto
 
-```plantuml
-@startuml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
-
-Person(usuario, "Usuário", "Interage com o sistema para gerenciar transações e consultar saldos")
-
-System_Boundary(Sistema, "Sistema de Lançamentos e Consolidado") {
-    System(controle_lancamentos, "Controle de Lançamentos", "Gerencia transações de débito e crédito")
-    System(consolidado, "Consolidado", "Consolida saldos e gera relatórios de saldo")
-}
-
-Rel(usuario, controle_lancamentos, "Gerencia Transações (Débito/Crédito)")
-Rel(usuario, consolidado, "Visualiza Saldo Consolidado")
-Rel(controle_lancamentos, consolidado, "Comunicação via RabbitMQ")
-
-@enduml
-```
+<img src="img/diagrama_contexto.svg" alt="Diagrama de Contêineres" width="800"/>
 
 ### Diagrama de Contêiner
 
-```plantuml
-@startuml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+<img src="img/diagrama_container.svg" alt="Diagrama de Contêineres" width="800"/>
 
-Person(usuario, "Usuário")
+### Diagrama de Componente
 
-System_Boundary(Sistema, "Sistema") {
-    Container_Boundary(controle_lancamentos, "Controle de Lançamentos") {
-        Container_API(controle_api, "Controle de Lançamentos API", "REST API", "Gerencia as transações")
-        Container_Db(bd_transacoes, "Banco de Dados de Transações", "PostgreSQL", "Armazena transações de débito/crédito")
-    }
-
-    Container_Boundary(consolidado, "Consolidado") {
-        Container_API(consolidado_api, "Consolidado API", "REST API", "Consulta e atualiza dados consolidados")
-        Container_Db(bd_consolidado, "Banco de Dados Consolidado", "PostgreSQL", "Armazena os dados consolidados")
-    }
-
-    Container(rabbitmq, "RabbitMQ", "Mensageria", "Filas para comunicação assíncrona entre os serviços")
-}
-
-Rel(usuario, controle_api, "Gerencia Transações")
-Rel(usuario, consolidado_api, "Consulta Saldo Consolidado")
-Rel(controle_api, rabbitmq, "Publica eventos de transação")
-Rel(rabbitmq, consolidado_api, "Eventos de transação")
-Rel(controle_api, bd_transacoes, "Grava dados de transações")
-Rel(consolidado_api, bd_consolidado, "Consulta e atualiza dados consolidados")
-
-@enduml
-```
+<img src="img/diagrama_componente.svg" alt="Diagrama de Contêineres" width="800"/>
 
 ## 🚀 Executando o Projeto
 
@@ -121,8 +81,8 @@ O projeto é executado em contêineres Docker, o que facilita a configuração e
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/SeuUsuario/NomeDoRepositorio.git
-   cd NomeDoRepositorio
+   git clone https://github.dev/FlavioAndre/lancamentos
+   cd lancamentos
    ```
 
 2. **Construa e inicie os serviços com Docker Compose:**
