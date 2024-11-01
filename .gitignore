@@ -1,0 +1,85 @@
+# Build Folders / Files
+bin/
+obj/
+
+# User-specific Files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Auto-generated Files
+*.generated.cs
+
+# Logs
+*.log
+
+# Visual Studio Code
+.vscode/
+
+# DotNet
+*.ncrunch*
+*.localhistory
+*.cache
+*.config
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Docker
+**/docker-compose.override.yml
+**/.docker
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Database
+*.mdf
+*.ldf
+*.sqlite
+
+# Secrets
+secrets.json
+appsettings.Development.json
+
+# Rider
+.idea/
+*.iml
+
+# JetBrains
+*.ipr
+*.iws
+.idea/
+
+# Environment Variables
+.env
+
+# Publish output
+.publish/
+
+# Resharper
+_ReSharper.Caches/
+
+# Coverage Reports
+coverage/
+*.coverage
+*.coveragexml
+
+# NCrunch
+_NCrunch_*/
+.*crunch*
+
+# Backup & Restore
+_backup/
+_restore/

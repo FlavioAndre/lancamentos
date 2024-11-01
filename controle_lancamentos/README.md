@@ -36,6 +36,10 @@ O serviço de Controle de Lançamentos segue uma estrutura baseada em princípio
 - **DbContext**:
   - `TransactionDbContext`: Gerencia a conexão e o contexto com o banco de dados.
 
+### Diagrama de Sequencia
+
+<img src="../img/diagrama_sequencia_lancamento.svg" alt="Diagrama de Contêineres" width="800"/>
+
 ## 🚀 Executando o Serviço
 
 ### Pré-requisitos
@@ -91,4 +95,4 @@ Esse comando executará os testes unitários e de integração, fornecendo um re
 - **Autenticação e Autorização**: Implementar OAuth2 para proteger os endpoints da API.
 - **Melhoria na Resiliência de Mensageria**: Implementar políticas de retry e dead-letter para eventos enviados ao RabbitMQ.
 - **Otimização de Consultas**: Implementar caching para consultas frequentes de transações.
-```
+

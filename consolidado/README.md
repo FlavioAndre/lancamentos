@@ -35,6 +35,10 @@ O serviço de Consolidação de Saldo segue uma estrutura baseada em princípios
 - **DbContext**:
   - `ConsolidationDbContext`: Gerencia a conexão e o contexto com o banco de dados.
 
+### Diagrama de Sequencia
+
+<img src="../img/diagrama_sequencia_consolidado.svg" alt="Diagrama de Contêineres" width="800"/>
+
 ## 🚀 Executando o Serviço
 
 ### Pré-requisitos
