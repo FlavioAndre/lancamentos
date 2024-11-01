@@ -45,9 +45,14 @@ O projeto adota os princípios SOLID e utiliza os seguintes padrões arquitetura
   - `/src/Infrastructure`: Conexão com banco de dados e configuração de mensageria.
   - `/src/WebAPI`: Exposição das APIs REST.
 
+## Arquivo de Registros de Decisões Arquiteturais (ADR) 📄
+
+[Registro de Decisões Arquiteturais (ADR)](ADR_Arquitetura_Controle_Lancamentos.md)
+
+
 ## 🛠 Tecnologias Utilizadas
 
-- **C# e ASP.NET Core (versão 6.0)**: Para construção de APIs com alta performance e robustez.
+- **C# e ASP.NET Core (versão 8.0)**: Para construção de APIs com alta performance e robustez.
 - **RabbitMQ (versão 3.9)**: Middleware para comunicação assíncrona entre serviços.
 - **PostgreSQL (versão 13)**: Banco de dados relacional para armazenamento das transações e dados consolidados.
 - **Docker e Docker Compose**: Para empacotamento e orquestração dos serviços.
@@ -74,8 +79,7 @@ O projeto é executado em contêineres Docker, o que facilita a configuração e
 
 ### Pré-requisitos
 
-- Docker (versão 20.10 ou superior)
-- Docker Compose (versão 1.29 ou superior)
+- Docker (versão 27 ou superior)
 
 ### Passo a Passo para Executar o Projeto
 
@@ -100,6 +104,42 @@ O projeto é executado em contêineres Docker, o que facilita a configuração e
 4. **Acesse as APIs:**
    - **Controle de Lançamentos**: `http://localhost:8080/api/transactions`
    - **Consolidado**: `http://localhost:8081/api/consolidation`
+
+## Acesso aos Serviços e Exemplos de Uso 🚀
+
+### Acesso ao RabbitMQ 🐰
+- 🔗 URL: http://localhost:15672/#/
+- 👤 Usuário: guest
+- 🔒 Senha: guest
+
+### Serviço de Controle de Lançamentos 📊
+- 📜 Swagger: http://localhost:8080/index.html 
+
+Exemplo de Inserção de Lançamento ➕
+Para inserir um lançamento, utilize o seguinte comando curl:
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8080/api/Transaction' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "amount": 10,
+  "type": "credit",
+  "description": "Exemplo de transação"
+}'
+```
+
+### Serviço de Consolidação 💼
+📜 Swagger: http://localhost:8081/index.html
+Exemplo de Consulta ao Consolidado 🔍
+Para consultar o saldo consolidado, utilize o seguinte comando curl:
+
+```bash
+curl -X 'GET' \
+  'http://localhost:8081/api/Consolidation' \
+  -H 'accept: */*'
+```
 
 ### 🔍 Rodando os Testes
 

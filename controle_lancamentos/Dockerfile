@@ -8,9 +8,10 @@ COPY ./src/Application/Application.csproj ./src/Application/
 COPY ./src/Domain/Domain.csproj ./src/Domain/
 COPY ./src/Infrastructure/Infrastructure.csproj ./src/Infrastructure/
 COPY ./src/WebAPI/WebAPI.csproj ./src/WebAPI/
+COPY ./tests/controle_lancamentos.Tests/controle_lancamentos.Tests.csproj ./tests/controle_lancamentos.Tests/
 
 # Restaurar dependências
-RUN dotnet restore 
+RUN dotnet restore
 
 # Copiar o restante dos arquivos
 COPY ./src/Application/ ./src/Application/
